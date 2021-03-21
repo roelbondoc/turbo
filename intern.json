@@ -3,13 +3,6 @@
   "functionalSuites": "dist/tests/functional.js",
   "environments": [
     {
-      "browserName": "chrome",
-      "fixSessionCapabilities": true,
-      "goog:chromeOptions": {
-        "args": [ "headless", "disable-gpu" ]
-      }
-    },
-    {
       "browserName": "firefox",
       "fixSessionCapabilities": true,
       "moz:firefoxOptions": {

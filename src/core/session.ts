@@ -123,7 +123,7 @@ export class Session implements HistoryDelegate, LinkClickObserverDelegate, Navi
 
   willFollowLinkToLocation(link: Element, location: URL) {
     return this.elementIsNavigable(link)
-      && this.locationIsVisitable(location)
+      && this.locationIsVisitable(location, this.linkIsExplicitHTML(link))
       && this.applicationAllowsFollowingLinkToLocation(link, location)
   }
 
@@ -258,8 +258,13 @@ export class Session implements HistoryDelegate, LinkClickObserverDelegate, Navi
     }
   }
 
-  locationIsVisitable(location: URL) {
-    return isPrefixedBy(location, this.snapshot.rootLocation) && isHTML(location)
+  locationIsVisitable(location: URL, isExplicitHTML: boolean) {
+    return isPrefixedBy(location, this.snapshot.rootLocation) && (isExplicitHTML || isHTML(location))
+  }
+
+  linkIsExplicitHTML(link: Element) {
+    const isHTML = link.getAttribute("data-turbo-is-html")
+    return isHTML == "true"
   }
 
   get snapshot() {

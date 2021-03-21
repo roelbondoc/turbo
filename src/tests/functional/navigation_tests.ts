@@ -24,6 +24,21 @@ export class NavigationTests extends TurboDriveTestCase {
     this.assert.equal(await this.visitAction, "replace")
   }
 
+  //async "test following a same-origin non html data-turbo-is-html not specified link"() {
+  //  this.clickSelector("#same-origin-not-html-link")
+  //  await this.nextBody
+  //  this.assert.equal(await this.pathname, "/src/tests/fixtures/is_html.txt")
+  //  this.assert.equal(await this.visitAction, "load")
+  //}
+
+  async "test following a same-origin explicit data-turbo-is-html link"() {
+    console.log(await (await this.remote.findByCssSelector("#same-origin-is-html-link")).getAttribute("data-turbo-is-html") == 'true')
+    this.clickSelector("#same-origin-is-html-link")
+    await this.nextBody
+    this.assert.equal(await this.pathname, "/src/tests/fixtures/is_html.txt")
+    this.assert.equal(await this.visitAction, "advance")
+  }
+
   async "test following a same-origin data-turbo=false link"() {
     this.clickSelector("#same-origin-false-link")
     await this.nextBody
